@@ -10,6 +10,8 @@
   <img src="docs/blueprint/header-a.svg" width="880" alt="punkt and strich in front, side and isometric view, punkt 34.5 by 34.5 by 34.5 mm, strich 54.6 by 34.5 by 37.5 mm">
 </picture>
 
+<img src="docs/photos/strich.jpg" width="440" alt="strich on a desk, the clock showing 14:13 through the dark screen plate">
+
 punkt is an LED matrix status light for Claude Code, built on an ESP32-S3
 Super Mini. It sits next to the keyboard, shows what Claude is doing right now
 and how full the context window and the 5 hour usage limit are, and it is

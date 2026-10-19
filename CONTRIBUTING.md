@@ -251,6 +251,7 @@ docs/
   blueprint/                 the README header views and the social preview, written by make blueprint
   animations/                one GIF and one still PNG per punkt picture, written by make gifs
   strich/                    the strich pictures, written by make gifs
+  photos/                    photos of the built devices, metadata stripped
   screenshots/               settings page section pictures used by the docs
   wiring/                    wiring diagrams of punkt and strich, light and dark
 hardware/

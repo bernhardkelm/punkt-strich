@@ -27,14 +27,14 @@ wiring differ.
 | Part | punkt | strich | What matters when buying |
 |------|:-----:|:------:|--------------------------|
 | ESP32-S3 Super Mini | 1 | 1 | The 4 MB flash variant, as sold by vipitec, which is the board the author built with. Boards from other sellers look alike but may differ in the power path (charger, battery pads, on-board divider), and the power facts in [Battery](#battery) come from the Tinytronics schematic, which matched the measurements. The board must have the USB-C port, the BAT pads and the onboard charger |
-| Adafruit Mini 0.8" 8x8 LED matrix with HT16K33 backpack | 1 | 2 | Single colour, the colour is your choice. Buy the I2C backpack version with the HT16K33 driver. Buy both in the same colour so the halves match |
+| Adafruit Mini 0.8" 8x8 LED matrix with HT16K33 backpack | 1 | 2 | Single colour, ultra bright white recommended. Buy the I2C backpack version with the HT16K33 driver |
 | Coin | 1 | 2 | punkt uses one 5 euro cent coin (about 21 mm). strich uses two 2 euro cent coins, which are smaller and fit under its top wall. Outside the euro area any similar copper plated coin, a copper disc or a flat copper washer works. A different size changes the touch reading, the `touchTrigger` setting tunes it, see [Touch coins](#touch-coins) |
 | Thin stranded wire | 5 pieces | 10 pieces | Silicone insulated, about 28 to 30 AWG, flexible, easy to solder. Four wires join the matrix to the board and one goes to the coin, about 10 cm each. strich needs four more for the second matrix and one for the second coin |
 | LiPo cell, single cell (1S) | none | 1 | About 500 mAh, 3.7 V, size 902030, with its own protection circuit (the board has none) and a JST-PH 2.0 plug, see [Battery](#battery). It has to fit the case, check the case drawings before you order |
 | Data capable USB-C cable | 1 | 1 | A charge only cable carries no data and the board will not show up on your computer |
-| M2 brass heat-set insert | 4 | 4 | Per case. They sit in the case and take the front screws. Length _to be added_ |
-| M2 screw, large flat head (wafer or flat pan head), front | 4 | 4 | Hold the screen plate to the inserts in the case. Length _to be added_ |
-| M2 screw, inner | 4 | 4 | Hold the matrix (on strich, the matrices) to the screen face from the inside. Length _to be added_ |
+| M2 brass heat-set insert | 4 | 4 | Per case. They sit in the case and take the front screws. M2 x 3 to 4 mm long, about 3.5 mm outer diameter to fit the 3.4 mm holes |
+| M2 screw, large flat head (wafer or flat pan head), front | 4 | 4 | Hold the screen plate to the inserts in the case. M2 x 8: the screen has about 4.4 mm of material under the counterbore, which leaves about 3.5 mm of thread in the insert, an M2 x 6 would only bite about 1.6 mm |
+| M2 screw, inner | 4 | 4 | Hold the matrix (on strich, the matrices) to the screen face from the inside. M2 x 4: 1.6 mm of PCB plus about 2.4 mm into the 2.5 mm deep holes, so the tip stops short of the thin front skin |
 | Solder jig for the Super Mini (optional) | 1 | 1 | Printed from `hardware/esp_solder_jig.3mf`, see [Printing the case](#printing-the-case). It holds the board steady while you solder wires to its pads |
 
 The A0 address on the right-hand backpack of strich is set with a blob of
@@ -201,8 +201,6 @@ Runtime and low battery:
 
 ## Printing the case
 
-**Case files:** _to be added_
-
 - [`hardware/punkt_case.3mf`](../hardware/punkt_case.3mf): the punkt case, with
   the bodies "Case" and "Screen".
 - [`hardware/strich_case.3mf`](../hardware/strich_case.3mf): the strich case,
@@ -215,10 +213,17 @@ All files are 3MF in millimetres, exported from Fusion. Each case prints as two
 parts: the case and the screen plate. The screen plate is the front of the
 device.
 
-**Suggested print settings:** _to be added_ (material, layer height, wall
-count, infill, supports, orientation)
+**Suggested print settings:**
 
-**Photo of the printed parts:** _to be added_
+| Setting | Value |
+|---------|-------|
+| Material | PETG, Bambu Lab PETG recommended |
+| Bed | Cool Plate SuperTack, 70 °C |
+| Layer height | 0.2 mm |
+| Walls | 3 |
+| Infill | 15 % gyroid |
+| Supports | None |
+| Orientation | Auto oriented, the screen plate prints face down |
 
 The top wall has to stay thin enough for the touch coins to read through it,
 see [Touch coins](#touch-coins).
@@ -235,19 +240,15 @@ board is hard to reach afterwards.
 2. **Set the heat-set inserts.** Press the 4 M2 brass inserts into the case
    with the soldering iron, straight and flush. Let them cool before you
    screw into them.
-   **Photo: _to be added_**
 3. **Prepare the backpacks.** Solder a header or wires to the four pads (+, -,
    D, C) of each backpack. For strich, bridge the A0 pad on the right-hand one
    with a blob of solder.
-   **Photo: _to be added_**
 4. **Solder the matrix wires.** Optionally put the Super Mini in the solder
    jig first, it holds the board steady. Join + to 5V, - to GND, D to GPIO8 and C to
    GPIO9. On strich, chain the second backpack from the first and mount both
    the same way round.
-   **Photo: _to be added_**
 5. **Attach the coins.** Wire of about 10 cm from each coin to GPIO4, and on
    strich to GPIO5 for the right one. See [Touch coins](#touch-coins).
-   **Photo: _to be added_**
 6. **Test before the battery.** Power the board over USB and check the first
    boot: the matrix lights and the board shows up for Wi-Fi setup, see
    [First boot and Wi-Fi](../README.md#4-first-boot-and-wi-fi).
@@ -258,13 +259,11 @@ board is hard to reach afterwards.
    [Battery](#battery). The block on the back of the screen plate holds the
    cell in place once the case is closed. Unplug USB and see that the board keeps running, then
    plug it in again.
-   **Photo: _to be added_**
 8. **Close the case.** Screw the matrix (on strich, both matrices) to the
    inside of the screen plate with the 4 inner M2 screws, press the coins
    against the underside of the top wall, route the wires clear of the
    matrices, tuck the battery in without pressure and close the case with the
    4 front M2 screws into the inserts.
-   **Photo: _to be added_**
 
 If something does not work, see
 [Troubleshooting](usage.md#troubleshooting).
