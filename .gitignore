@@ -1,0 +1,10 @@
+.pio/
+tools/render/build/
+.DS_Store
+__pycache__/
+docs/screenshots/.snap.txt
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+.vscode/*
+!.vscode/extensions.json

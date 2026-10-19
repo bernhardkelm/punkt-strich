@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+<title>punkt</title>
+<circle cx="6" cy="6" r="3" fill="currentColor"/>
+<circle cx="14" cy="6" r="3" fill="currentColor"/>
+<circle cx="6" cy="14" r="3" fill="currentColor"/>
+</svg>
