@@ -45,6 +45,11 @@ void UsageView::tick(Display& display, uint32_t nowMs) {
   draw(display, pixels_, lit_);
 }
 
+void UsageView::applyBrightness(Display& display, uint32_t fadeMs) {
+  brightness_ = brightnessAt(millis() - startMs_, percent_);
+  display.setBrightness(brightness_, fadeMs);
+}
+
 uint8_t UsageView::pixelsFor(uint8_t percent) {
   const uint16_t capped = percent > 100 ? 100 : percent;
   return static_cast<uint8_t>((capped * kPixelCount + 50) / 100);

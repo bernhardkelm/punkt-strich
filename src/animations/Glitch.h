@@ -8,6 +8,7 @@ public:
   const char* name() const override;
   void begin(Display& display) override;
   void tick(Display& display, uint32_t nowMs) override;
+  void applyBrightness(Display& display, uint32_t fadeMs) override;
   bool finished() const override;
 
 private:

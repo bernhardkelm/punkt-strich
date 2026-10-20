@@ -36,6 +36,10 @@ bool Done::finished() const {
   return finished_;
 }
 
+void Done::applyBrightness(Display& display, uint32_t fadeMs) {
+  display.setBrightness(levelFor(frame_), fadeMs);
+}
+
 uint8_t Done::frameAt(uint32_t elapsed) {
   if (elapsed < kDimMs) {
     return static_cast<uint8_t>(elapsed / kRingMs);
@@ -64,26 +68,33 @@ uint8_t Done::scaled(uint8_t percent) const {
   return static_cast<uint8_t>((maxBrightness() * percent + 50) / 100);
 }
 
+uint8_t Done::levelFor(uint8_t frame) const {
+  if (frame < kRingCount) {
+    return maxBrightness();
+  }
+
+  if (frame == kRingCount) {
+    return scaled(kDimPercent);
+  }
+
+  if (frame == kRingCount + 1) {
+    return scaled(kPeakPercent);
+  }
+
+  return scaled(kHoldPercent);
+}
+
 void Done::draw(Display& display, uint8_t frame) const {
   display.clear();
+  display.setBrightness(levelFor(frame));
 
   if (frame < kRingCount) {
-    display.setBrightness(maxBrightness());
-
     for (uint8_t radius = 0; radius <= frame; radius++) {
       drawRing(display, radius);
     }
 
     display.show();
     return;
-  }
-
-  if (frame == kRingCount) {
-    display.setBrightness(scaled(kDimPercent));
-  } else if (frame == kRingCount + 1) {
-    display.setBrightness(scaled(kPeakPercent));
-  } else {
-    display.setBrightness(scaled(kHoldPercent));
   }
 
   const uint8_t firstRow = frame < kDrainFrame ? 0 : static_cast<uint8_t>(frame - kDrainFrame + 1);

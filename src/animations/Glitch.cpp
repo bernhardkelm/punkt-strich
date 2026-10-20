@@ -32,6 +32,18 @@ bool Glitch::finished() const {
   return finished_;
 }
 
+void Glitch::applyBrightness(Display& display, uint32_t fadeMs) {
+  if (held_) {
+    display.setBrightness(maxBrightness() / 2, fadeMs);
+    return;
+  }
+
+  // a running burst keeps kGlitchBrightness, independent of the ceiling
+  if (burst_ == 0) {
+    display.setBrightness(maxBrightness(), fadeMs);
+  }
+}
+
 uint8_t Glitch::burstAt(uint32_t elapsed) {
   for (uint8_t i = 0; i < kBurstCount; i++) {
     if (elapsed >= kBurstStartMs[i] && elapsed < kBurstEndMs[i]) {

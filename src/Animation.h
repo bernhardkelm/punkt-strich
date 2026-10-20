@@ -45,6 +45,17 @@ public:
   }
 
   /**
+   * Ramps the display to the level the animation runs at under the current ceiling, called when
+   * the ceiling changed while it runs. Animations that run below the ceiling override it.
+   * @param {Display&} display - matrix to apply the level to
+   * @param {uint32_t} fadeMs - ramp duration, 0 applies immediately
+   * @returns {void}
+   */
+  virtual void applyBrightness(Display& display, uint32_t fadeMs) {
+    display.setBrightness(maxBrightness_, fadeMs);
+  }
+
+  /**
    * Sets the context window fill the calm animations show as a gauge on the bottom row.
    * @param {uint8_t} percent - 0 hides the gauge, 1 to 100 lights round(percent * 8 / 100) pixels
    * @returns {void}

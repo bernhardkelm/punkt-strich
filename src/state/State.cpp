@@ -88,7 +88,7 @@ void StateMachine::setBrightness(uint8_t level, uint32_t fadeMs) {
   batteryFace_.setMaxBrightness(ceiling_);
 
   // the clock redraws once a minute, the ramp lands the new ceiling without waiting for a frame
-  display_.setBrightness(ceiling_, fadeMs);
+  animation_->applyBrightness(display_, fadeMs);
 }
 
 uint8_t StateMachine::brightness() const {

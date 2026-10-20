@@ -157,6 +157,8 @@ private:
 
   /**
    * Draws the disc for the eased, elapsed share of rippleMs_, a finished retract holds its floor.
+   * A committed ripple lowers the brightness floor along with the reveal, so a dimmer picture
+   * does not run at the frozen frame's level until the ripple ends.
    * @param {uint32_t} nowMs - millis() at the time of the call
    * @returns {bool} - true while the ripple runs or the retract holds, false once it ended
    */
@@ -165,9 +167,10 @@ private:
   /**
    * Draws the revealed disc of a radius around the origin inside the clip region and its front.
    * @param {float} radius - disc radius in doubled units
+   * @param {uint8_t} floor - brightness floor to hold while the disc shows, 0 to 15
    * @returns {void}
    */
-  void drawDisc(float radius);
+  void drawDisc(float radius, uint8_t floor);
 
   /**
    * Ends the ripple and the swipe disc, the caller sets the brightness floor back to the dome rule.
@@ -198,7 +201,7 @@ private:
   /** ripple duration in ms, scaled so the reveal speed matches the reference canvas */
   uint32_t rippleMs_ = 0;
   uint32_t rippleStartMs_ = 0;
-  /** brightness floor held from the freeze through the ripple, the frozen frame's level at least */
+  /** brightness floor held from the freeze, the frozen frame's level at least, a ripple fades it */
   uint8_t rippleFloor_ = 0;
   /** brightness ceiling of the last tick */
   uint8_t ceiling_ = 0;

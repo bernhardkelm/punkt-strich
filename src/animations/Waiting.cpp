@@ -32,9 +32,8 @@ void Waiting::draw(Display& display, uint32_t step) const {
   const float phase = static_cast<float>(step);
   const uint8_t x = static_cast<uint8_t>(lroundf((sinf(phase * kXFreq) + 1.0f) * 0.5f * (Display::kWidth - 1)));
   const uint8_t y = static_cast<uint8_t>(lroundf((sinf(phase * kYFreq + kYPhase) + 1.0f) * 0.5f * (rows - 1)));
-  const uint8_t brightness = maxBrightness() / 2 > 1 ? maxBrightness() / 2 : 1;
 
-  display.setBrightnessNow(brightness);
+  display.setBrightnessNow(level());
   display.clear();
 
   if (percent > 0) {
@@ -43,4 +42,12 @@ void Waiting::draw(Display& display, uint32_t step) const {
 
   display.setPixel(x, y, true);
   display.show();
+}
+
+void Waiting::applyBrightness(Display& display, uint32_t fadeMs) {
+  display.setBrightness(level(), fadeMs);
+}
+
+uint8_t Waiting::level() const {
+  return maxBrightness() / 2 > 1 ? maxBrightness() / 2 : 1;
 }

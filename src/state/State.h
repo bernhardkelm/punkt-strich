@@ -426,9 +426,9 @@ public:
   void tick(uint32_t nowMs);
 
   /**
-   * Sets the brightness ceiling every animation scales against and hands it to the display, the
-   * ramp lands it without waiting for a frame. Every animation reads the ceiling again when it
-   * draws its next frame, so no redraw is forced here and a new level lands within one step.
+   * Sets the brightness ceiling every animation scales against and lets the running animation
+   * ramp the display to its level under it, without waiting for a frame. Every animation reads the
+   * ceiling again when it draws its next frame, so no redraw is forced here.
    * @param {uint8_t} level - 0 to 15
    * @param {uint32_t} fadeMs - how long the ramp takes, a slow one glides into the dimmed level
    * @returns {void}

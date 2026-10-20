@@ -30,3 +30,7 @@ void Off::tick(Display& display, uint32_t nowMs) {
   display.setPixel(Display::kWidth - 1, Display::kHeight - 1, lit);
   display.show();
 }
+
+void Off::applyBrightness(Display& display, uint32_t fadeMs) {
+  display.setBrightness(kBlinkBrightness, fadeMs);
+}

@@ -8,6 +8,7 @@ public:
   const char* name() const override;
   void begin(Display& display) override;
   void tick(Display& display, uint32_t nowMs) override;
+  void applyBrightness(Display& display, uint32_t fadeMs) override;
   bool finished() const override;
 
 private:
@@ -42,6 +43,13 @@ private:
    * @returns {uint8_t} - rounded brightness level
    */
   uint8_t scaled(uint8_t percent) const;
+
+  /**
+   * Returns the brightness a frame runs at, the rings at the ceiling and the fill pulsing below it.
+   * @param {uint8_t} frame - frame index from frameAt()
+   * @returns {uint8_t} - brightness level
+   */
+  uint8_t levelFor(uint8_t frame) const;
 
   /**
    * Draws one frame.

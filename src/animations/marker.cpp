@@ -14,10 +14,12 @@ bool markerLit(uint32_t elapsed) {
   return blinkLitFirst(elapsed, kPeriodMs, kOnMs);
 }
 
-void drawMarker(Display& display, bool lit, uint8_t maxBrightness, uint8_t contextPercent) {
-  const uint8_t brightness = maxBrightness / 2 > 1 ? maxBrightness / 2 : 1;
+uint8_t markerBrightness(uint8_t maxBrightness) {
+  return maxBrightness / 2 > 1 ? maxBrightness / 2 : 1;
+}
 
-  display.setBrightnessNow(brightness);
+void drawMarker(Display& display, bool lit, uint8_t maxBrightness, uint8_t contextPercent) {
+  display.setBrightnessNow(markerBrightness(maxBrightness));
   display.clear();
 
   if (contextPercent > 0) {

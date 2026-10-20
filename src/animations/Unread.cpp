@@ -24,3 +24,7 @@ void Unread::tick(Display& display, uint32_t nowMs) {
   lit_ = lit;
   drawMarker(display, lit_, maxBrightness(), contextPercent());
 }
+
+void Unread::applyBrightness(Display& display, uint32_t fadeMs) {
+  display.setBrightness(markerBrightness(maxBrightness()), fadeMs);
+}

@@ -140,7 +140,7 @@ bool TouchOverlay::drawReveal(uint32_t nowMs) {
     return drawRipple(nowMs);
   }
 
-  drawDisc(swipeRadius_);
+  drawDisc(swipeRadius_, rippleFloor_);
   return true;
 }
 
@@ -156,22 +156,25 @@ bool TouchOverlay::drawRipple(uint32_t nowMs) {
     rippling_ = false;
     swipeRadius_ = rippleTo_;
     swipePhase_ = SwipePhase::HELD;
-    drawDisc(swipeRadius_);
+    drawDisc(swipeRadius_, rippleFloor_);
     return true;
   }
 
   const float t = static_cast<float>(elapsedMs) / static_cast<float>(rippleMs_);
   const float progress = eased(t);
-  drawDisc(rippleFrom_ + (rippleTo_ - rippleFrom_) * progress);
+  // a committed reveal fades the frozen frame's level out with it, a retract keeps the old picture
+  const float held = swipePhase_ == SwipePhase::NONE ? 1.0f - progress : 1.0f;
+  const uint8_t floor = static_cast<uint8_t>(static_cast<float>(rippleFloor_) * held + 0.5f);
+  drawDisc(rippleFrom_ + (rippleTo_ - rippleFrom_) * progress, floor);
   return true;
 }
 
-void TouchOverlay::drawDisc(float radius) {
+void TouchOverlay::drawDisc(float radius, uint8_t floor) {
   const float innerRadius = radius > kFrontWidth ? radius - kFrontWidth : 0.0f;
   const uint16_t outerR2 = squaredRadius(radius);
   const uint16_t innerR2 = squaredRadius(innerRadius);
 
-  display_.setBrightnessFloor(rippleFloor_);
+  display_.setBrightnessFloor(floor);
   display_.setReveal(discMask(outerR2, originX_, clipFirst_, clipLast_));
   display_.setOverlay(ringMask(outerR2, innerR2, originX_, clipFirst_, clipLast_), Frame{});
 }
